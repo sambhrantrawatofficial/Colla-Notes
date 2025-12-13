@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Colla_Notes</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Colla Notes.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.css" />
+
+</head>
+<body>
+
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand text-white" style="font-size: 22px;">Colla Notes</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" style="align-items: center;">
+                    <li><a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a asp-controller="Home" asp-action="Privacy" class="nav-link px-2 text-white">Privacy Policy</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 justify-content-center">
+                    <input type="search" class="form-control form-control-dark" placeholder="Search here...." aria-label="Search" style="width: 35vw">
+                </form>
+
+                <li class="nav-item dropdown" style="list-style-type: none">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Username
+          </a>
+          <ul class="dropdown-menu">
+                        <li><a class="dropdown-item text-black" href="#">Profile</a></li>
+                        <li><a class="dropdown-item text-black" href="#">Posts</a></li>
+                        <li><a class="dropdown-item text-black" href="#">Analytics</a></li>
+                        <li><a class="dropdown-item text-black" asp-controller="Home" asp-action="Login">Login</a></li>
+          </ul>
+
+        </li>
+                
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer bg-dark text-white">
+        <div class="container">
+            &copy; 2025 - Colla_Notes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
