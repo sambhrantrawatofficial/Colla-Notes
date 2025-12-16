@@ -1,9 +1,19 @@
-﻿@page
-@model Colla_Notes.Views.Home.LoginModel
-@{
-
-   <div class="modal-content">
-        <h1>Read more page</h1>
-   </div>
-
+﻿@{
+    ViewData["Title"] = ViewBag.Title;
 }
+
+<div class="container mt-5" style="max-width: 800px;">
+    <h1 class="mb-4" style="font-size:24px">@ViewBag.Title</h1>
+
+    <p style="font-size: 18px; line-height: 1.8;">
+        @ViewBag.Description
+    </p>
+
+    <hr />
+
+    <a asp-controller="Home"
+       asp-action="Index"
+       class="btn btn-secondary mt-3">
+        ← Back to All Topics
+    </a>
+</div>
