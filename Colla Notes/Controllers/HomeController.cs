@@ -11,6 +11,25 @@ namespace Colla_Notes.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Readmore(int id)
+        {
+            if (id == 1)
+            {
+                ViewBag.Title = "HTML";
+                ViewBag.Description =
+                    "HTML (HyperText Markup Language) is the foundational language used to structure content on the web.";
+            }
+            else if (id == 2)
+            {
+                ViewBag.Title = "CSS";
+                ViewBag.Description =
+                    "CSS (Cascading Style Sheets) controls the appearance and layout of web pages.";
+            }
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

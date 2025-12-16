@@ -1,107 +1,325 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var mail = HttpContextAccessor.HttpContext.Session.GetString("email");
+}
+@{
+    ViewData["Title"] = "Home";
 }
 
-@* MAIN CONTENT OF THIS PAGE *@
-<div class="d-flex flex-wrap mt-4 mb-3 gap-4 justify-content-center align-content-center">
+<!--------------------------------------------- Mobile Menu Toggle --------------------------------------------->
+<button id="menuToggle" class="fixed top-4 left-4 z-[1100] bg-white border-0 p-3 rounded-lg shadow-md cursor-pointer flex items-center justify-center md:hidden">
+    <div class="w-6 h-6 flex flex-col justify-around">
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+    </div>
+</button>
+<!--------------------------------------------------------------------------------------------------------------->
 
-    <div class="card" data-aos="fade-right" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a asp-controller="Home" as class="btn btn-primary">Read More</a>
-        </div>
-        </div>
+<div id="overlay" class="hidden fixed top-0 left-0 w-full h-full bg-black/50 z-[999]"></div>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-        </div>
-
-    <div class="card" data-aos="fade-left" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
+<!------------------------------------------------- Menu bar----------------------------------------------------->
+<aside id="sidebar"
+       class="fixed top-0 left-0 w-full h-screen bg-gradient-to-b from-[#A8E6CF] to-[#7FD4B8] p-6 shadow-lg overflow-y-auto z-[1000] -translate-x-full transition-transform duration-300 md:w-1/4 md:translate-x-0 lg:w-[22%] xl:w-[20%]">
+    <div class="mb-10">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center ml-2">
+            <div class="w-8 h-8 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] rounded-lg"></div>
         </div>
     </div>
+    <nav class="space-y-2">
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200">Home</button>
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Recents</button>
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Profile</button>
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">My Posts</button>
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Analytics</button>
+        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl
+        border-0 bg-transparent text-base font-medium text-[#2C3E50]
+        pointer-events-none select-none"
+        style="outline: none !important;box-shadow: none !important;background-color: transparent !important;">
+            @mail
+        </button>
+    </nav>
+</aside>
+<!--------------------------------------------------------------------------------------------------------------->
 
-    <div class="card" data-aos="fade-right" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
-
-    <div class="card" data-aos="fade-up" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
-
-    <div class="card" data-aos="fade-left" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
+<!--********************************************* Main Content *********************************************-->
+<main class="w-full min-h-screen p-4 ml-0 transition-all duration-300 sm:p-6 md:w-3/4 md:ml-[25%] md:p-8 lg:w-[78%] lg:ml-[22%] xl:w-[80%] xl:ml-[20%]">
     
-    <div class="card" data-aos="fade-right" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
+    <div class="mb-8">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+            <!-- Search Bar -->
+            <div class="flex items-center flex-1 max-w-full sm:max-w-md bg-white
+            border border-gray-200 rounded-xl shadow-sm
+            focus-within:ring-2 focus-within:ring-[#5DADE2]
+            transition-all duration-200">
+                <span class="pl-4 pr-3 text-gray-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+                        </path>
+                    </svg>
+                </span>
+                <input type="text"
+                       placeholder="Search courses..."
+                       class="w-full py-3 pr-4 text-gray-700 bg-transparent
+               focus:outline-none" />
+            </div>
+
+            <!-- Category Selector -->
+            <div class="relative w-64">
+                <button type="button"
+                        onclick="toggleDropdown()"
+                        class="flex w-full items-center justify-between
+               rounded-2xl border border-gray-200 bg-white
+               px-5 py-3 text-sm font-medium text-gray-700
+               shadow-sm transition-all duration-200
+               hover:border-gray-300
+               focus:outline-none focus:ring-2 focus:ring-[#5DADE2]/50">
+                    <span id="selectedText">All Categories</span>
+                    <svg class="h-4 w-4 text-gray-400 transition-transform duration-200"
+                         id="chevron"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <ul id="dropdown"
+                    class="absolute z-10 mt-3 hidden w-full overflow-hidden
+               rounded-2xl border border-gray-200 bg-white
+               shadow-xl">
+                    <li onclick="selectOption('All Categories')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        All Categories
+                    </li>
+                    <li onclick="selectOption('CSS')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        CSS
+                    </li>
+                    <li onclick="selectOption('JavaScript')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        JavaScript
+                    </li>
+                    <li onclick="selectOption('React')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        React
+                    </li>
+                    <li onclick="selectOption('C#')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        C#
+                    </li>
+                    <li onclick="selectOption('Java')"
+                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        Java
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
+    <!--=============================================== Cards =================================================-->
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
 
-    <div class="card" data-aos="fade-left" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+            <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
+                <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
+            </div>
+            <div class="p-6 space-y-5">
+                <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                    Learn how to bring your UI to life using smooth transitions,
+                    expressive keyframes, and modern animation techniques in CSS.
+                </p>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
+                </div>
+                <div class="pt-2">
+                    <a asp-controller="Home"
+                       asp-action="Readmore"
+                       asp-route-id="1"
+                       class="inline-flex items-center justify-center
+                      w-full sm:w-auto
+                      px-6 py-3 rounded-xl
+                      bg-[#2C3E50] text-white text-sm font-medium
+                      transition-all duration-200
+                      hover:bg-black/90 hover:scale-[1.02]
+                      focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                        Read more →
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="card" data-aos="fade-right" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a asp-controller="Home" as class="btn btn-primary">Read More</a>
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden
+            transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+            <div class="h-24 bg-gradient-to-br from-[#FFB6C1] to-[#FF69B4] px-6 flex items-end pb-6">
+                <h3 class="text-xl font-semibold text-white leading-snug">CSS Best Practices 🚀</h3>
+            </div>
+            <div class="p-6 space-y-5">
+                <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                    Discover essential patterns and practices for building scalable,
+                    maintainable React applications with modern hooks and components.
+                </p>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">React</span>
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">JavaScript</span>
+                </div>
+                <div class="pt-2">
+                    <a asp-controller="Home"
+                       asp-action="Readmore"
+                       asp-route-id="2"
+                       class="inline-flex items-center justify-center
+                      w-full sm:w-auto
+                      px-6 py-3 rounded-xl
+                      bg-[#2C3E50] text-white text-sm font-medium
+                      transition-all duration-200
+                      hover:bg-black/90 hover:scale-[1.02]
+                      focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                        Read more →
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
+        <!--More cards-->
+        @for (int i = 1; i <= 30; i++)
+
+        {
+            <!-- Card 1 -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+                <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
+                    <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
+                </div>
+                <div class="p-6 space-y-5">
+                    <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                        Learn how to bring your UI to life using smooth transitions,
+                        expressive keyframes, and modern animation techniques in CSS.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
+                    </div>
+                    <div class="pt-2">
+                        <a asp-controller="Home"
+                           asp-action="Readmore"
+                           asp-route-id="1"
+                           class="inline-flex items-center justify-center
+                              w-full sm:w-auto
+                              px-6 py-3 rounded-xl
+                              bg-[#2C3E50] text-white text-sm font-medium
+                              transition-all duration-200
+                              hover:bg-black/90 hover:scale-[1.02]
+                              focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                            Read more →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden
+                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+                <div class="h-24 bg-gradient-to-br from-[#FFB6C1] to-[#FF69B4] px-6 flex items-end pb-6">
+                    <h3 class="text-xl font-semibold text-white leading-snug">CSS Best Practices 🚀</h3>
+                </div>
+                <div class="p-6 space-y-5">
+                    <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                        Discover essential patterns and practices for building scalable,
+                        maintainable React applications with modern hooks and components.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">React</span>
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">JavaScript</span>
+                    </div>
+                    <div class="pt-2">
+                        <a asp-controller="Home"
+                           asp-action="Readmore"
+                           asp-route-id="2"
+                           class="inline-flex items-center justify-center
+                              w-full sm:w-auto
+                              px-6 py-3 rounded-xl
+                              bg-[#2C3E50] text-white text-sm font-medium
+                              transition-all duration-200
+                              hover:bg-black/90 hover:scale-[1.02]
+                              focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                            Read more →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <!--==============================================/Cards=================================================-->
+    
+    <!--========================================= Footer =============================================-->
+    <footer class="mt-12 pt-8 pb-6">
+        <!-- Copyright -->
+        <div class="pt-6 border-t border-gray-200 text-center">
+            <p class="text-sm text-gray-600">
+                © 2024 Learning Platform. All rights reserved.
+            </p>
+            <p class="text-sm text-gray-600">
+                Colla Notes - Privacy Policy
+            </p>
         </div>
-    </div>
+    </footer>
+    <!--============================================/Footer==============================================-->
 
-    <div class="card" data-aos="fade-left" data-aos-delay="70" data-aos-duration="1200">
-        <div class="card-body" style="width: 22rem;">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
+</main>
+<!--********************************************/Main Content********************************************-->
 
-</div>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const navButtons = document.querySelectorAll('.nav-btn');
+
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+
+    navButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+
+            navButtons.forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-md');
+                btn.classList.add('bg-transparent');
+            });
+            button.classList.remove('bg-transparent');
+            button.classList.add('bg-white', 'shadow-md');
+        });
+    });
+</script>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        const chevron = document.getElementById('chevron');
+
+        dropdown.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+    }
+
+    function selectOption(text) {
+        document.getElementById('selectedText').innerText = text;
+        document.getElementById('dropdown').classList.add('hidden');
+        document.getElementById('chevron').classList.remove('rotate-180');
+    }
+</script>
+
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
