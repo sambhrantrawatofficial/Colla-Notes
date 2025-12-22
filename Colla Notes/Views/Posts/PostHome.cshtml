@@ -1,0 +1,193 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+@model List<Post>
+@{
+    ViewData["Title"] = "Posts";
+}
+
+<!--------------------------------------------- Mobile Menu Toggle --------------------------------------------->
+
+<button id="menuToggle" class="fixed top-4 left-4 z-[1100] bg-white border-0 p-3 rounded-lg shadow-md cursor-pointer flex items-center justify-center md:hidden">
+    <div class="w-6 h-6 flex flex-col justify-around">
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+    </div>
+</button>
+
+<div id="overlay" class="hidden fixed top-0 left-0 w-full h-full bg-black/50 z-[999]"></div>
+
+<!------------------------------------------------- Menu bar ----------------------------------------------------->
+
+<aside id="sidebar"
+       class="fixed top-0 left-0 w-full h-screen bg-gradient-to-b from-[#A8E6CF] to-[#7FD4B8] p-6 shadow-lg overflow-y-auto z-[1000] -translate-x-full transition-transform duration-300 md:w-1/4 md:translate-x-0 lg:w-[22%] xl:w-[20%]">
+    <div class="mb-10">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center ml-2">
+            <div class="w-8 h-8 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] rounded-lg"></div>
+        </div>
+    </div>
+    <nav class="space-y-2">
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+            asp-action="Index" asp-controller="Home">Home</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
+            asp-action="Index" asp-controller="Profile">Profile</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+            asp-action="PostHome" asp-controller="Posts">My Posts</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+            asp-action="Index" asp-controller="Analytics">Analytics</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent text-base font-medium text-[#2C3E50] pointer-events-none select-none no-underline"
+           style="outline: none !important; box-shadow: none !important; background-color: transparent !important;">
+            @Username
+        </a>
+    </nav>
+</aside>
+
+<!------------------------------------------------- Main Content ------------------------------------------------->
+
+<main class="w-full min-h-screen p-4 ml-0 pb-24 transition-all duration-300 sm:p-6 md:w-3/4 md:ml-[25%] md:p-8 lg:w-[78%] lg:ml-[22%] xl:w-[80%] xl:ml-[20%] relative">
+
+    <!-- Create Button Top Right -->
+    <a asp-action="PostCreate" asp-controller="Posts"
+            class="absolute top-0 right-0 mt-4 mr-4 inline-flex items-center justify-center
+                   px-6 py-3 rounded-xl
+                   bg-gradient-to-r from-[#5DADE2] to-[#3498DB]
+                   text-white text-sm font-semibold
+                   transition-all duration-200
+                   hover:from-[#3498DB] hover:to-[#2C7FB8]
+                   hover:scale-[1.02] hover:shadow-xl
+                   focus:outline-none focus:ring-2 focus:ring-[#5DADE2]/50">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Create New Post
+    </a>
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[#2C3E50] mb-2">My Posts</h1>
+        <p class="text-gray-600">Manage and organize your content</p>
+    </div>
+
+    <!--=============================================== Cards =================================================-->
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-1">
+
+        <!-- Card 1 -->
+        @* <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+            <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
+                <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
+            </div>
+            <div class="p-6 space-y-5">
+                <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                    Learn how to bring your UI to life using smooth transitions,
+                    expressive keyframes, and modern animation techniques in CSS.
+                </p>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
+                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
+                </div>
+                <div class="pt-2 flex gap-3">
+                    <a asp-controller="Posts" asp-action="PostEdit"
+                       class="inline-flex items-center justify-center flex-1 px-6 py-3 rounded-xl bg-[#5DADE2] text-white text-sm font-medium transition-all duration-200 hover:bg-[#3498DB] hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#5DADE2]/50">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit
+                    </a>
+                    <button onclick="confirmDelete()"
+                            class="inline-flex items-center justify-center flex-1 px-6 py-3 rounded-xl bg-red-500 text-white text-sm font-medium transition-all duration-200 hover:bg-red-600 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-red-500/50">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div> *@
+
+            <!--More cards-->
+        @foreach(var post in Model)
+        {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+                <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
+                    <h3 class="text-xl font-semibold text-white leading-snug">@post.Title</h3>
+                </div>
+                <div class="p-6 space-y-5">
+                    <p class="text-base text-[#2C3E50]/80 leading-relaxed">
+                        @post.Description
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">@post.Tag_1</span>
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">@post.Tag_2</span>
+                    </div>
+                    <div class="pt-2 flex gap-3">
+                        <a asp-controller="Posts" asp-action="PostEdit" asp-route-id="@post.Post_Id"
+                           class="inline-flex items-center justify-center flex-1 px-6 py-3 rounded-xl bg-[#5DADE2] text-white text-sm font-medium transition-all duration-200 hover:bg-[#3498DB] hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#5DADE2]/50">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                        </a>
+                        <button onclick="confirmDelete('@post.Post_Id')"
+                                class="inline-flex items-center justify-center flex-1 px-6 py-3 rounded-xl bg-red-500 text-white text-sm font-medium transition-all duration-200 hover:bg-red-600 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-red-500/50">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+</main>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<!-- DELETE CONFIRM -->
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this post?")) {
+            window.location.href = '/Posts/Delete/' + id;
+        }
+    }
+    AOS.init();
+    // Dropdown functionality
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        const chevron = document.getElementById('chevron');
+        dropdown.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+    }
+    function selectOption(option) {
+        document.getElementById('selectedText').textContent = option;
+        toggleDropdown();
+    }
+    // Mobile menu functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    });
+    overlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('dropdown');
+        const button = e.target.closest('button');
+        if (!button && !dropdown.classList.contains('hidden')) {
+            toggleDropdown();
+        }
+    });
+</script>

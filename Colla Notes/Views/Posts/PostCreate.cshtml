@@ -1,0 +1,107 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+@model Post
+@{
+    ViewData["Title"] = "Create Post";
+}
+<div class="container mt-4 mb-5" style="max-width: 900px;">
+
+    <!-- PAGE HEADER -->
+    <div class="mb-3">
+        <h2 class="fw-bold mt-2 ms-3">Create New Post ➕</h2>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+
+            <!-- FORM -->
+            <form asp-action="PostCreate" method="post" asp-controller="Posts" novalidate>
+                @Html.AntiForgeryToken()
+
+                <!-- TITLE -->
+                <div class="mb-4">
+                    <label asp-for="Title" class="form-label fw-semibold">
+                        Post Title
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control"
+                           placeholder="Enter a clear and meaningful title" />
+
+                    <small class="text-muted">
+                        This title will be visible to all users.
+                    </small>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label fw-semibold">
+                        Post Content
+                    </label>
+
+                    <textarea asp-for="Description"
+                              id="editor"
+                              class="form-control"
+                              rows="10"></textarea>
+
+                    <small class="text-muted">
+                        Write the full content of your post here.
+                    </small>
+                </div>
+
+                <!--Tags-->
+                <div class="mb-4">
+                    <label asp-for="Tag_1" class="form-label fw-semibold">
+                        Tag 1
+                    </label>
+                <input type="text" asp-for="Tag_1" class="form-control-sm" placeholder="Write your tag" />
+                    <label asp-for="Tag_2" class="form-label fw-semibold">
+                        Tag 2
+                    </label>
+                    <input type="text" asp-for="Tag_2" class="form-control-sm" placeholder="Write your tag" />
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="d-flex justify-content-between align-items-center mt-4">
+
+                    <a asp-controller="Posts"
+                       asp-action="PostHome"
+                       class="btn btn-outline-secondary">
+                        ← Back to Posts
+                    </a>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary px-4">
+                            💾 Save Post
+                        </button>
+
+                        <a asp-controller="Posts"
+                           asp-action="PostHome"
+                           class="btn btn-outline-danger px-4">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- CKEDITOR -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'link',
+                'bulletedList', 'numberedList', '|',
+                'blockQuote', 'undo', 'redo'
+            ]
+        })
+        .catch(error => console.error(error));
+</script>

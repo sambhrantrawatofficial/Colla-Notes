@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -56,6 +60,7 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <p style="display:none;">@Username</p>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

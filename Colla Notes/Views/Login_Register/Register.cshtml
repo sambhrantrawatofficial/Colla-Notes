@@ -1,5 +1,5 @@
 ﻿
-@model Colla_Notes.Views.Login_Register.RegisterModel
+@model Colla_Notes.Models.RegisterClass
 @{
     ViewData["Title"] = "Register";
 }
@@ -68,30 +68,45 @@
                     <p class="text-muted animate__animated animate__fadeIn animate__delay-3s">Create your Colla Notes account today!</p>
                 </div>
 
-                <form>
+                <form asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
+
                     <!-- Username Input -->
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Username</label>
-                        <input type="text" class="form-control form-control-lg border-2 shadow-sm" placeholder="Choose a username" required>
+                        <label class="form-label fw-semibold" asp-for="Username">Username</label>
+                        <input type="text" asp-for="Username" class="form-control form-control-lg border-2 shadow-sm" placeholder="Choose a username" required>
+                    </div>
+
+                    <!-- Name Input -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" asp-for="Name">Name</label>
+                        <input type="text" asp-for="Name" class="form-control form-control-lg border-2 shadow-sm" placeholder="Choose a username" required>
                     </div>
 
                     <!-- Email Input -->
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control form-control-lg border-2 shadow-sm" placeholder="Enter your email" required>
+                        <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                        <input type="email" asp-for="Email" class="form-control form-control-lg border-2 shadow-sm" placeholder="Enter your email" required>
                     </div>
 
                     <!-- Mobile Number Input -->
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Mobile Number</label>
-                        <input type="tel" class="form-control form-control-lg border-2 shadow-sm" placeholder="Enter your mobile number" required>
+                        <label asp-for="Phone_Number" class="form-label fw-semibold">Mobile Number</label>
+                        <input asp-for="Phone_Number" type="tel" class="form-control form-control-lg border-2 shadow-sm" placeholder="Enter your mobile number" required>
                     </div>
 
                     <!-- Password Input -->
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password" class="form-control form-control-lg border-2 shadow-sm" placeholder="Create a strong password" required>
+                        <label asp-for="Password" class="form-label fw-semibold">Password</label>
+                        <input type="password" asp-for="Password" class="form-control form-control-lg border-2 shadow-sm" placeholder="Create a strong password" required>
                         <div class="form-text small">Must be at least 8 characters long</div>
+                    </div>
+
+                    <!-- Password Input 2 -->
+                    <div class="mb-3">
+                        <label asp-for="Confirm_Password" class="form-label fw-semibold">Confirm Password</label>
+                        <input type="password" asp-for="Confirm_Password" class="form-control form-control-lg border-2 shadow-sm" placeholder="Enter password again" required>
+                        <div class="form-text small">Confirm your password</div>
                     </div>
 
                     <!-- Terms & Conditions -->
@@ -103,7 +118,7 @@
                     </div>
 
                     <!-- Register Button -->
-                    <button type="submit" asp-action="RegisterSuccessful" asp-controller="Login_Register" class="btn btn-lg fw-bold shadow-sm mb-4 w-100 text-white" style="background-color: #2F8F63; border: none;">
+                    <button type="submit" class="btn btn-lg fw-bold shadow-sm mb-4 w-100 text-white" style="background-color: #2F8F63; border: none;">
                         Create Account
                     </button>
 

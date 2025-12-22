@@ -1,10 +1,11 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
-    var mail = HttpContextAccessor.HttpContext.Session.GetString("email");
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("username");
 }
-@{
-    ViewData["Title"] = "Home";
-}
+@model List<Post>
+@using System.Text.RegularExpressions
+
 
 <!--------------------------------------------- Mobile Menu Toggle --------------------------------------------->
 <button id="menuToggle" class="fixed top-4 left-4 z-[1100] bg-white border-0 p-3 rounded-lg shadow-md cursor-pointer flex items-center justify-center md:hidden">
@@ -27,24 +28,25 @@
         </div>
     </div>
     <nav class="space-y-2">
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200">Home</button>
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Recents</button>
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Profile</button>
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">My Posts</button>
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50">Analytics</button>
-        <button class="nav-btn w-full text-left px-4 py-3 rounded-xl
-        border-0 bg-transparent text-base font-medium text-[#2C3E50]
-        pointer-events-none select-none"
-        style="outline: none !important;box-shadow: none !important;background-color: transparent !important;">
-            @mail
-        </button>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
+           asp-action="Index" asp-controller="Home">Home</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+            asp-action="Index" asp-controller="Profile">Profile</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+           asp-action="PostHome" asp-controller="Posts">My Posts</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+            asp-action="Index" asp-controller="Analytics">Analytics</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent text-base font-medium text-[#2C3E50] pointer-events-none select-none no-underline"
+           style="outline: none !important; box-shadow: none !important; background-color: transparent !important;">
+            @Username
+        </a>
     </nav>
 </aside>
 <!--------------------------------------------------------------------------------------------------------------->
-
 <!--********************************************* Main Content *********************************************-->
 <main class="w-full min-h-screen p-4 ml-0 transition-all duration-300 sm:p-6 md:w-3/4 md:ml-[25%] md:p-8 lg:w-[78%] lg:ml-[22%] xl:w-[80%] xl:ml-[20%]">
-    
+
     <div class="mb-8">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
@@ -67,7 +69,7 @@
             </div>
 
             <!-- Category Selector -->
-            <div class="relative w-64">
+            @* <div class="relative w-64">
                 <button type="button"
                         onclick="toggleDropdown()"
                         class="flex w-full items-center justify-between
@@ -113,15 +115,14 @@
                         Java
                     </li>
                 </ul>
-            </div>
+            </div> *@
 
         </div>
     </div>
 
     <!--=============================================== Cards =================================================-->
     <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-
-        <!-- Card 1 -->
+        @* <!-- Card 1 -->
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
                 <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
@@ -135,116 +136,73 @@
                     <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
                     <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
                 </div>
+                <div class="small text-muted mb-2">
+                    👁️ @(Context.Session.GetInt32("Post_1_Views") ?? 0)
+                    &nbsp; • &nbsp;
+                    👍 @(Context.Session.GetInt32("Post_1_Likes") ?? 0)
+                </div>
                 <div class="pt-2">
                     <a asp-controller="Home"
                        asp-action="Readmore"
                        asp-route-id="1"
                        class="inline-flex items-center justify-center
-                      w-full sm:w-auto
-                      px-6 py-3 rounded-xl
-                      bg-[#2C3E50] text-white text-sm font-medium
-                      transition-all duration-200
-                      hover:bg-black/90 hover:scale-[1.02]
-                      focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                  w-full sm:w-auto
+                  px-6 py-3 rounded-xl
+                  bg-[#2C3E50] text-white text-sm font-medium
+                  transition-all duration-200
+                  hover:bg-black/90 hover:scale-[1.02]
+                  focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
                         Read more →
                     </a>
                 </div>
             </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden
-            transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
-            <div class="h-24 bg-gradient-to-br from-[#FFB6C1] to-[#FF69B4] px-6 flex items-end pb-6">
-                <h3 class="text-xl font-semibold text-white leading-snug">CSS Best Practices 🚀</h3>
-            </div>
-            <div class="p-6 space-y-5">
-                <p class="text-base text-[#2C3E50]/80 leading-relaxed">
-                    Discover essential patterns and practices for building scalable,
-                    maintainable React applications with modern hooks and components.
-                </p>
-                <div class="flex gap-2 flex-wrap">
-                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">React</span>
-                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">JavaScript</span>
-                </div>
-                <div class="pt-2">
-                    <a asp-controller="Home"
-                       asp-action="Readmore"
-                       asp-route-id="2"
-                       class="inline-flex items-center justify-center
-                      w-full sm:w-auto
-                      px-6 py-3 rounded-xl
-                      bg-[#2C3E50] text-white text-sm font-medium
-                      transition-all duration-200
-                      hover:bg-black/90 hover:scale-[1.02]
-                      focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
-                        Read more →
-                    </a>
-                </div>
-            </div>
-        </div>
+        </div> *@
 
         <!--More cards-->
-        @for (int i = 1; i <= 30; i++)
-
+        @foreach (var data in Model)
         {
-            <!-- Card 1 -->
+            <!-- Dynamic Card -->
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
                 <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
-                    <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
+                    <h3 class="text-xl font-semibold text-white leading-snug">@data.Title</h3>
                 </div>
                 <div class="p-6 space-y-5">
                     <p class="text-base text-[#2C3E50]/80 leading-relaxed">
-                        Learn how to bring your UI to life using smooth transitions,
-                        expressive keyframes, and modern animation techniques in CSS.
+                        @{
+                            // Extract first paragraph
+                            var match = Regex.Match(data.Description ?? "", "<p>(.*?)</p>", RegexOptions.Singleline);
+                            var firstPara = match.Success ? match.Groups[1].Value : data.Description ?? "";
+                            // Remove HTML tags
+                            var plain = Regex.Replace(firstPara, "<.*?>", "");
+                            // Remove &nbsp; and other extra spaces
+                            plain = plain.Replace("&nbsp;", " ").Trim();
+                            // Trim safely
+                            var shortText = plain.Length > 120 ? plain.Substring(0, 120) + "..." : plain;
+                        }
+                        @shortText
                     </p>
                     <div class="flex gap-2 flex-wrap">
-                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
-                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">@data.Tag_1</span>
+                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">@data.Tag_2</span>
                     </div>
+                    <div class="small text-muted mb-2">
+                        👁️ @data.ViewCount • 👍 @data.LikeCount
+                    </div>
+                    <!-- Author -->
+                    <p class="text-muted small mb-1">
+                        <strong>Author:</strong> @data.Username
+                    </p>
                     <div class="pt-2">
                         <a asp-controller="Home"
                            asp-action="Readmore"
-                           asp-route-id="1"
+                           asp-route-id="@data.Post_Id"
                            class="inline-flex items-center justify-center
-                              w-full sm:w-auto
-                              px-6 py-3 rounded-xl
-                              bg-[#2C3E50] text-white text-sm font-medium
-                              transition-all duration-200
-                              hover:bg-black/90 hover:scale-[1.02]
-                              focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
-                            Read more →
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden
-                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
-                <div class="h-24 bg-gradient-to-br from-[#FFB6C1] to-[#FF69B4] px-6 flex items-end pb-6">
-                    <h3 class="text-xl font-semibold text-white leading-snug">CSS Best Practices 🚀</h3>
-                </div>
-                <div class="p-6 space-y-5">
-                    <p class="text-base text-[#2C3E50]/80 leading-relaxed">
-                        Discover essential patterns and practices for building scalable,
-                        maintainable React applications with modern hooks and components.
-                    </p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">React</span>
-                        <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">JavaScript</span>
-                    </div>
-                    <div class="pt-2">
-                        <a asp-controller="Home"
-                           asp-action="Readmore"
-                           asp-route-id="2"
-                           class="inline-flex items-center justify-center
-                              w-full sm:w-auto
-                              px-6 py-3 rounded-xl
-                              bg-[#2C3E50] text-white text-sm font-medium
-                              transition-all duration-200
-                              hover:bg-black/90 hover:scale-[1.02]
-                              focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
+                          w-full sm:w-auto
+                          px-6 py-3 rounded-xl
+                          bg-[#2C3E50] text-white text-sm font-medium
+                          transition-all duration-200
+                          hover:bg-black/90 hover:scale-[1.02]
+                          focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
                             Read more →
                         </a>
                     </div>
@@ -254,7 +212,6 @@
 
     </div>
     <!--==============================================/Cards=================================================-->
-    
     <!--========================================= Footer =============================================-->
     <footer class="mt-12 pt-8 pb-6">
         <!-- Copyright -->
@@ -272,56 +229,38 @@
 </main>
 <!--********************************************/Main Content********************************************-->
 
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
+    AOS.init();
+    // Dropdown functionality
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        const chevron = document.getElementById('chevron');
+        dropdown.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+    }
+    function selectOption(option) {
+        document.getElementById('selectedText').textContent = option;
+        toggleDropdown();
+    }
+    // Mobile menu functionality
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    const navButtons = document.querySelectorAll('.nav-btn');
-
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('-translate-x-full');
         overlay.classList.toggle('hidden');
     });
-
     overlay.addEventListener('click', () => {
         sidebar.classList.add('-translate-x-full');
         overlay.classList.add('hidden');
     });
-
-    navButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-
-            navButtons.forEach(btn => {
-                btn.classList.remove('bg-white', 'shadow-md');
-                btn.classList.add('bg-transparent');
-            });
-            button.classList.remove('bg-transparent');
-            button.classList.add('bg-white', 'shadow-md');
-        });
-    });
-</script>
-<script>
-    function toggleDropdown() {
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
         const dropdown = document.getElementById('dropdown');
-        const chevron = document.getElementById('chevron');
-
-        dropdown.classList.toggle('hidden');
-        chevron.classList.toggle('rotate-180');
-    }
-
-    function selectOption(text) {
-        document.getElementById('selectedText').innerText = text;
-        document.getElementById('dropdown').classList.add('hidden');
-        document.getElementById('chevron').classList.remove('rotate-180');
-    }
-</script>
-
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-    AOS.init();
+        const button = e.target.closest('button');
+        if (!button && !dropdown.classList.contains('hidden')) {
+            toggleDropdown();
+        }
+    });
 </script>

@@ -1,3 +1,6 @@
+﻿using Colla_Notes.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +12,9 @@ builder.Services.AddSession();
 
 // Register IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
@@ -20,11 +26,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseSession();
 app.UseHttpsRedirection();
-app.UseRouting();
 
+app.UseRouting();          // ✅ FIRST routing
+app.UseSession();          // ✅ THEN session
 app.UseAuthorization();
+
 
 app.MapStaticAssets();
 

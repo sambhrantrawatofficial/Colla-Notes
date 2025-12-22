@@ -1,0 +1,132 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var Username = HttpContextAccessor.HttpContext.Session.GetString("username");
+}
+@{
+}
+<!-- Mobile Menu Toggle -->
+<button id="menuToggle"
+        class="fixed top-4 left-4 z-[1100] bg-white border-0 p-3 rounded-lg shadow-md
+               cursor-pointer flex items-center justify-center md:hidden">
+    <div class="w-6 h-6 flex flex-col justify-around">
+        <span class="menu-line w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="menu-line w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+        <span class="menu-line w-full h-0.5 bg-[#2C3E50] rounded-sm transition-all duration-300"></span>
+    </div>
+</button>
+
+<!-- Overlay -->
+<div id="overlay"
+     class="hidden fixed top-0 left-0 w-full h-full bg-black/50 z-[999]"></div>
+<aside id="sidebar"
+       class="fixed top-0 left-0 w-full h-screen
+              bg-gradient-to-b from-[#A8E6CF] to-[#7FD4B8]
+              p-6 shadow-lg overflow-y-auto z-[1000]
+              -translate-x-full transition-transform duration-300
+              md:w-1/4 md:translate-x-0
+              lg:w-[22%] xl:w-[20%]">
+
+    <!-- Logo -->
+    <div class="mb-10 flex items-center gap-3">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] rounded-lg"></div>
+        </div>
+        <h2 class="text-xl font-bold text-[#2C3E50]">Colla Notes</h2>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="space-y-2">
+
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+           asp-action="Index" asp-controller="Home">Home</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
+           asp-action="Index" asp-controller="Profile">Profile</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+           asp-action="PostHome" asp-controller="Posts">My Posts</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
+           asp-action="Index" asp-controller="Analytics">Analytics</a>
+        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent text-base font-medium text-[#2C3E50] pointer-events-none select-none no-underline"
+           style="outline: none !important; box-shadow: none !important; background-color: transparent !important;">
+            @Username
+        </a>
+
+    </nav>
+</aside>
+
+<main class="w-full min-h-screen p-4 ml-0 pb-24 transition-all duration-300
+         sm:p-6 md:w-3/4 md:ml-[25%]
+         md:p-8 lg:w-[78%] lg:ml-[22%]
+         xl:w-[80%] xl:ml-[20%]">
+
+    <!-- ===== Header ===== -->
+    <div class="mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+        <!-- Page Title -->
+        <div>
+            <h1 class="text-3xl font-bold text-[#2C3E50]">
+                Welcome, @Username 👋
+            </h1>
+            <p class="text-gray-600">
+                Manage your account & activity
+            </p>
+        </div>
+
+        <!-- Logout Button -->
+        <a asp-controller="Login_Register" asp-action="Logout"
+           class="inline-flex items-center justify-center
+                  px-6 py-3 rounded-xl
+                  bg-red-500 text-white font-semibold
+                  transition-all duration-200
+                  hover:bg-red-600 hover:scale-[1.02]
+                  shadow-md no-underline">
+            Logout
+        </a>
+    </div>
+
+    <!-- ===== Content Cards ===== -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-[#2C3E50] mb-2">
+                Profile Status
+            </h3>
+            <p class="text-gray-600">
+                Logged in as <span class="font-semibold">@Username</span>
+            </p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-[#2C3E50] mb-2">
+                My Posts
+            </h3>
+            <p class="text-3xl font-bold text-[#3498DB]">View & manage</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-[#2C3E50] mb-2">
+                Analytics
+            </h3>
+            <p class="text-3xl font-bold text-green-500">Insights</p>
+        </div>
+
+    </div>
+</main>
+
+
+
+<script>
+    const toggleBtn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+    });
+</script>
