@@ -22,15 +22,16 @@
 <!------------------------------------------------- Menu bar----------------------------------------------------->
 <aside id="sidebar"
        class="fixed top-0 left-0 w-full h-screen bg-gradient-to-b from-[#A8E6CF] to-[#7FD4B8] p-6 shadow-lg overflow-y-auto z-[1000] -translate-x-full transition-transform duration-300 md:w-1/4 md:translate-x-0 lg:w-[22%] xl:w-[20%]">
-    <div class="mb-10">
-        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center ml-2">
+    <!-- Logo -->
+    <div class="mb-10 flex items-center gap-3">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
             <div class="w-8 h-8 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] rounded-lg"></div>
         </div>
+        <h2 class="text-xl font-bold text-[#2C3E50]">Colla Notes</h2>
     </div>
     <nav class="space-y-2">
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
            asp-action="Index" asp-controller="Home">Home</a>
-        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
             asp-action="Index" asp-controller="Profile">Profile</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
@@ -51,113 +52,24 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
             <!-- Search Bar -->
-            <div class="flex items-center flex-1 max-w-full sm:max-w-md bg-white
-            border border-gray-200 rounded-xl shadow-sm
-            focus-within:ring-2 focus-within:ring-[#5DADE2]
-            transition-all duration-200">
-                <span class="pl-4 pr-3 text-gray-400">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
-                        </path>
-                    </svg>
-                </span>
-                <input type="text"
-                       placeholder="Search courses..."
-                       class="w-full py-3 pr-4 text-gray-700 bg-transparent
-               focus:outline-none" />
-            </div>
+            <form asp-action="Search" asp-controller="Home" method="get" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="title" class="form-control" placeholder="Search courses..." />
+                    <button class="btn btn-primary" type="submit">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
 
-            <!-- Category Selector -->
-            @* <div class="relative w-64">
-                <button type="button"
-                        onclick="toggleDropdown()"
-                        class="flex w-full items-center justify-between
-               rounded-2xl border border-gray-200 bg-white
-               px-5 py-3 text-sm font-medium text-gray-700
-               shadow-sm transition-all duration-200
-               hover:border-gray-300
-               focus:outline-none focus:ring-2 focus:ring-[#5DADE2]/50">
-                    <span id="selectedText">All Categories</span>
-                    <svg class="h-4 w-4 text-gray-400 transition-transform duration-200"
-                         id="chevron"
-                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <ul id="dropdown"
-                    class="absolute z-10 mt-3 hidden w-full overflow-hidden
-               rounded-2xl border border-gray-200 bg-white
-               shadow-xl">
-                    <li onclick="selectOption('All Categories')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        All Categories
-                    </li>
-                    <li onclick="selectOption('CSS')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        CSS
-                    </li>
-                    <li onclick="selectOption('JavaScript')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        JavaScript
-                    </li>
-                    <li onclick="selectOption('React')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        React
-                    </li>
-                    <li onclick="selectOption('C#')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        C#
-                    </li>
-                    <li onclick="selectOption('Java')"
-                        class="cursor-pointer px-5 py-3 text-sm text-gray-700 hover:bg-gray-100 transition">
-                        Java
-                    </li>
-                </ul>
-            </div> *@
 
         </div>
     </div>
 
     <!--=============================================== Cards =================================================-->
     <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-        @* <!-- Card 1 -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
-            <div class="h-24 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] px-6 flex items-end pb-6">
-                <h3 class="text-xl font-semibold text-white leading-snug">HTML Animations Guide 🎉</h3>
-            </div>
-            <div class="p-6 space-y-5">
-                <p class="text-base text-[#2C3E50]/80 leading-relaxed">
-                    Learn how to bring your UI to life using smooth transitions,
-                    expressive keyframes, and modern animation techniques in CSS.
-                </p>
-                <div class="flex gap-2 flex-wrap">
-                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">CSS</span>
-                    <span class="px-4 py-1.5 bg-[#A8E6CF]/30 rounded-full text-sm font-medium text-[#2C3E50]">Animation</span>
-                </div>
-                <div class="small text-muted mb-2">
-                    👁️ @(Context.Session.GetInt32("Post_1_Views") ?? 0)
-                    &nbsp; • &nbsp;
-                    👍 @(Context.Session.GetInt32("Post_1_Likes") ?? 0)
-                </div>
-                <div class="pt-2">
-                    <a asp-controller="Home"
-                       asp-action="Readmore"
-                       asp-route-id="1"
-                       class="inline-flex items-center justify-center
-                  w-full sm:w-auto
-                  px-6 py-3 rounded-xl
-                  bg-[#2C3E50] text-white text-sm font-medium
-                  transition-all duration-200
-                  hover:bg-black/90 hover:scale-[1.02]
-                  focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50">
-                        Read more →
-                    </a>
-                </div>
-            </div>
-        </div> *@
-
+       
         <!--More cards-->
         @foreach (var data in Model)
         {

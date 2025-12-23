@@ -23,15 +23,16 @@
 
 <aside id="sidebar"
        class="fixed top-0 left-0 w-full h-screen bg-gradient-to-b from-[#A8E6CF] to-[#7FD4B8] p-6 shadow-lg overflow-y-auto z-[1000] -translate-x-full transition-transform duration-300 md:w-1/4 md:translate-x-0 lg:w-[22%] xl:w-[20%]">
-    <div class="mb-10">
-        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center ml-2">
+    <!-- Logo -->
+    <div class="mb-10 flex items-center gap-3">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
             <div class="w-8 h-8 bg-gradient-to-br from-[#5DADE2] to-[#3498DB] rounded-lg"></div>
         </div>
+        <h2 class="text-xl font-bold text-[#2C3E50]">Colla Notes</h2>
     </div>
     <nav class="space-y-2">
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
             asp-action="Index" asp-controller="Home">Home</a>
-        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
             asp-action="Index" asp-controller="Profile">Profile</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"

@@ -120,6 +120,22 @@ namespace Colla_Notes.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Search(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                return View(new List<Post>()); // return empty list
+            }
+
+            var results = _context.Posts
+                .Where(p => (p.Title != null && p.Title.Contains(title))
+                         || (p.Description != null && p.Description.Contains(title)))
+                .ToList();
+
+            return View(results);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

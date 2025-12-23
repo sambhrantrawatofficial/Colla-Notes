@@ -39,7 +39,6 @@
 
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
            asp-action="Index" asp-controller="Home">Home</a>
-        <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline">Recents</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-white shadow-md cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 no-underline"
            asp-action="Index" asp-controller="Profile">Profile</a>
         <a class="nav-btn block w-full text-left px-4 py-3 rounded-xl border-0 bg-transparent cursor-pointer text-base font-medium text-[#2C3E50] transition-all duration-200 hover:bg-white/50 no-underline"
@@ -100,14 +99,14 @@
             <h3 class="text-lg font-semibold text-[#2C3E50] mb-2">
                 My Posts
             </h3>
-            <p class="text-3xl font-bold text-[#3498DB]">View & manage</p>
+            <a class="text-3xl font-bold text-[#3498DB]" asp-action="PostHome" asp-controller="Posts">View & manage</a>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-6">
             <h3 class="text-lg font-semibold text-[#2C3E50] mb-2">
                 Analytics
             </h3>
-            <p class="text-3xl font-bold text-green-500">Insights</p>
+            <a asp-action="Index" asp-controller="Analytics" class="text-3xl font-bold text-green-500">Insights</a>
         </div>
 
     </div>
