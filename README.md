@@ -54,11 +54,11 @@ Colla Notes/
 ├── Controllers/
 ├── Models/
 ├── Views/
-     (CSHTML pages)
+     :: (CSHTML pages)
 ├── wwwroot/
-     files (CSS, JS)
-├── Program.cs
-     Application entry point
-├── appsettings.json
-     Configuration
+     :: files (CSS, JS)
+├── Program.cs/
+     :: Application entry point
+├── appsettings.json/
+     :: Configuration
 └── README.md
