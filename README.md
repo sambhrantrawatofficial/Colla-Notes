@@ -51,10 +51,14 @@ These analytics help users track their activity and popularity of their notes.
 ```text
 Colla Notes/
 │
-├── Controllers/      // Handles request logic
-├── Models/           // Database models
-├── Views/            // UI (CSHTML pages)
-├── wwwroot/          // Static files (CSS, JS)
-├── Program.cs        // Application entry point
-├── appsettings.json  // Configuration
+├── Controllers/
+├── Models/
+├── Views/
+     (CSHTML pages)
+├── wwwroot/
+     files (CSS, JS)
+├── Program.cs
+     Application entry point
+├── appsettings.json
+     Configuration
 └── README.md
