@@ -53,88 +53,113 @@
     </nav>
 </aside>
 
+<!--=============================================Main============================================================-->
 <main class="w-full min-h-screen p-4 ml-0 pb-24 transition-all duration-300
          sm:p-6 md:w-3/4 md:ml-[25%]
          md:p-8 lg:w-[78%] lg:ml-[22%]
          xl:w-[80%] xl:ml-[20%]">
 
-    <div class="row g-3 mb-4 mt-4">
-        <div class="mb-4">
-            <small class="text-muted">Dashboard / Analytics</small>
-            <h2 class="fw-bold mt-1">📊 Post Analytics Overview</h2>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
-                    <h6>Total Posts</h6>
-                    <h3 class="fw-bold">@ViewBag.TotalPosts</h3>
-                </div>
-            </div>
+    <!-- Header -->
+    <div class="mb-8 mt-6">
+
+        <div class="flex items-center space-x-3 text-2xl md:text-3xl font-bold text-gray-600">
+            <a asp-action="Index" asp-controller="Home"
+               class="hover:text-gray-900 transition-colors duration-200">
+                Dashboard
+            </a>
+            <span class="text-gray-400">/</span>
+            <a href="/Analytics/Index"
+               class="text-gray-800 hover:text-black transition-colors duration-200">
+                Analytics
+            </a>
         </div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
-                    <h6>Total Views</h6>
-                    <h3 class="fw-bold">@ViewBag.TotalViews</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
-                    <h6>Total Likes</h6>
-                    <h3 class="fw-bold">@ViewBag.TotalLikes</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
-                    <h6>Total Comments</h6>
-                    <h3 class="fw-bold">@ViewBag.TotalComments</h3>
-                </div>
-            </div>
-        </div>
-
+        <h1 class="mt-4 flex items-center gap-3 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-700">
+            <span>Post Analytics Overview</span>
+            <span class="text-2xl md:text-3xl">📊</span>
+        </h1>
     </div>
-    <div class="card shadow-sm">
-        <div class="card-body">
 
-            <h5 class="mb-3 fw-bold">📊 Post Analytics</h5>
 
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Title</th>
-                        <th>Views</th>
-                        <th>Likes</th>
-                        <th>Comments</th>
-                    </tr>
-                </thead>
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg text-center rounded-4 h-100">
+                <div class="card-body py-4">
+                    <h6 class="text-muted mb-1">Total Posts</h6>
+                    <h2 class="fw-bold text-primary">@ViewBag.TotalPosts</h2>
+                </div>
+            </div>
+        </div>
 
-                <tbody>
-                    @foreach (var post in Model)
-                    {
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg text-center rounded-4 h-100">
+                <div class="card-body py-4">
+                    <h6 class="text-muted mb-1">Total Views</h6>
+                    <h2 class="fw-bold text-success">@ViewBag.TotalViews</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg text-center rounded-4 h-100">
+                <div class="card-body py-4">
+                    <h6 class="text-muted mb-1">Total Likes</h6>
+                    <h2 class="fw-bold text-danger">@ViewBag.TotalLikes</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg text-center rounded-4 h-100">
+                <div class="card-body py-4">
+                    <h6 class="text-muted mb-1">Total Comments</h6>
+                    <h2 class="fw-bold text-warning">@ViewBag.TotalComments</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-4">
+
+            <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                📈 Detailed Post Analytics
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-dark text-white rounded-top">
                         <tr>
-                            <td>@post.Title</td>
-                            <td>@post.ViewCount</td>
-                            <td>@post.LikeCount</td>
-                            <td>
-                                @(string.IsNullOrEmpty(post.Comments)
-                                                            ? 0
-                                                            : post.Comments.Split("||").Length)
-                            </td>
+                            <th class="py-3">Title</th>
+                            <th class="py-3 text-center">Views</th>
+                            <th class="py-3 text-center">Likes</th>
+                            <th class="py-3 text-center">Comments</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var post in Model)
+                        {
+                            <tr class="border-bottom">
+                                <td class="fw-semibold">@post.Title</td>
+                                <td class="text-center">@post.ViewCount</td>
+                                <td class="text-center">@post.LikeCount</td>
+                                <td class="text-center">
+                                    @(string.IsNullOrEmpty(post.Comments)
+                                                                    ? 0
+                                                                    : post.Comments.Split("||").Length)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
             @if (!Model.Any())
             {
-                <p class="text-muted text-center mt-3">
+                <p class="text-muted text-center mt-4">
                     No posts found.
                 </p>
             }
@@ -143,6 +168,7 @@
     </div>
 
 </main>
+
 
 
 <script>
